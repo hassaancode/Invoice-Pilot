@@ -13,6 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Calendar } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export function InvoiceForm() {
   const { invoice, updateField, addItem, updateItem, removeItem, initializeDates } = useInvoiceStore();
@@ -156,7 +157,22 @@ export function InvoiceForm() {
         <CardContent className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="space-y-2">
                 <Label htmlFor="currency">Currency</Label>
-                <Input id="currency" value={invoice.currency} onChange={(e) => updateField('currency', e.target.value)} />
+                <Select value={invoice.currency} onValueChange={(value) => updateField('currency', value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select currency" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="USD">USD - US Dollar</SelectItem>
+                    <SelectItem value="EUR">EUR - Euro</SelectItem>
+                    <SelectItem value="GBP">GBP - British Pound</SelectItem>
+                    <SelectItem value="JPY">JPY - Japanese Yen</SelectItem>
+                    <SelectItem value="AUD">AUD - Australian Dollar</SelectItem>
+                    <SelectItem value="CAD">CAD - Canadian Dollar</SelectItem>
+                    <SelectItem value="CHF">CHF - Swiss Franc</SelectItem>
+                    <SelectItem value="CNY">CNY - Chinese Yuan</SelectItem>
+                    <SelectItem value="INR">INR - Indian Rupee</SelectItem>
+                  </SelectContent>
+                </Select>
             </div>
             <div className="space-y-2">
                 <Label htmlFor="taxRate">Overall Tax (%)</Label>
