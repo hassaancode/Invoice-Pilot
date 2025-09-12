@@ -23,9 +23,9 @@ export function InvoicePreview() {
   }
 
   return (
-    <Card className="shadow-lg lg:sticky lg:top-24">
-      <CardContent className="p-8 md:p-12">
-        <header className="flex justify-between items-start mb-12">
+    <Card className="shadow-lg lg:sticky lg:top-24 print-shadow-none print-border-none">
+      <CardContent className="p-8 md:p-12 print-p-4">
+        <header className="flex justify-between items-start mb-12 print-header-mb">
           <div>
             <h1 className="text-3xl font-bold text-primary mb-2 font-headline">{invoice.senderName}</h1>
             <p className="text-muted-foreground whitespace-pre-wrap">{invoice.senderAddress}</p>
@@ -38,7 +38,7 @@ export function InvoicePreview() {
           </div>
         </header>
 
-        <section className="grid grid-cols-2 gap-4 mb-12">
+        <section className="grid grid-cols-2 gap-4 mb-12 print-section-mb">
           <div>
             <h3 className="font-semibold text-gray-500 mb-2">BILL TO</h3>
             <p className="font-bold">{invoice.recipientName}</p>
@@ -61,50 +61,50 @@ export function InvoicePreview() {
           <Table>
             <TableHeader>
               <TableRow className='bg-muted-foreground/10'>
-                <TableHead className="w-[50%]">Item Description</TableHead>
-                <TableHead className="text-center">Qty</TableHead>
-                <TableHead className="text-right">Unit Price</TableHead>
-                <TableHead className="text-right">Total</TableHead>
+                <TableHead className="w-[50%] print-table-cell-p">Item Description</TableHead>
+                <TableHead className="text-center print-table-cell-p">Qty</TableHead>
+                <TableHead className="text-right print-table-cell-p">Unit Price</TableHead>
+                <TableHead className="text-right print-table-cell-p">Total</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {invoice.items.map(item => (
                 <TableRow key={item.id}>
-                  <TableCell className="font-medium">{item.description}</TableCell>
-                  <TableCell className="text-center">{item.quantity}</TableCell>
-                  <TableCell className="text-right">{formatCurrency(item.price, invoice.currency)}</TableCell>
-                  <TableCell className="text-right">{formatCurrency(item.quantity * item.price, invoice.currency)}</TableCell>
+                  <TableCell className="font-medium print-table-cell-p">{item.description}</TableCell>
+                  <TableCell className="text-center print-table-cell-p">{item.quantity}</TableCell>
+                  <TableCell className="text-right print-table-cell-p">{formatCurrency(item.price, invoice.currency)}</TableCell>
+                  <TableCell className="text-right print-table-cell-p">{formatCurrency(item.quantity * item.price, invoice.currency)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
             <TableFooter>
                 <TableRow className='border-none'>
                     <TableCell colSpan={2} />
-                    <TableCell className='text-right font-medium'>Subtotal</TableCell>
-                    <TableCell className="text-right">{formatCurrency(subtotal, invoice.currency)}</TableCell>
+                    <TableCell className='text-right font-medium print-table-cell-p'>Subtotal</TableCell>
+                    <TableCell className="text-right print-table-cell-p">{formatCurrency(subtotal, invoice.currency)}</TableCell>
                 </TableRow>
                  <TableRow className='border-none'>
                     <TableCell colSpan={2} />
-                    <TableCell className='text-right font-medium'>Discount ({invoice.discount}%)</TableCell>
-                    <TableCell className="text-right text-destructive">- {formatCurrency(discountAmount, invoice.currency)}</TableCell>
+                    <TableCell className='text-right font-medium print-table-cell-p'>Discount ({invoice.discount}%)</TableCell>
+                    <TableCell className="text-right text-destructive print-table-cell-p">- {formatCurrency(discountAmount, invoice.currency)}</TableCell>
                 </TableRow>
                 <TableRow className='border-none'>
                     <TableCell colSpan={2} />
-                    <TableCell className='text-right font-medium'>Tax</TableCell>
-                    <TableCell className="text-right">{formatCurrency(totalTax, invoice.currency)}</TableCell>
+                    <TableCell className='text-right font-medium print-table-cell-p'>Tax</TableCell>
+                    <TableCell className="text-right print-table-cell-p">{formatCurrency(totalTax, invoice.currency)}</TableCell>
                 </TableRow>
                 <TableRow className='border-t-2 border-primary bg-primary/10'>
                     <TableCell colSpan={2} />
-                    <TableCell className='text-right text-lg font-bold'>Total</TableCell>
-                    <TableCell className="text-right text-lg font-bold">{formatCurrency(total, invoice.currency)}</TableCell>
+                    <TableCell className='text-right text-lg font-bold print-table-cell-p'>Total</TableCell>
+                    <TableCell className="text-right text-lg font-bold print-table-cell-p">{formatCurrency(total, invoice.currency)}</TableCell>
                 </TableRow>
             </TableFooter>
           </Table>
         </section>
 
-        <Separator className="my-8" />
+        <Separator className="my-8 print-my-4" />
 
-        <footer className="space-y-4">
+        <footer className="space-y-4 print-footer-mt">
             <div>
                 <h3 className="font-semibold text-gray-500 mb-2">Notes</h3>
                 <p className="text-muted-foreground text-sm whitespace-pre-wrap">{invoice.notes}</p>

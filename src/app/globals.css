@@ -89,9 +89,31 @@
       display: none;
     }
   }
+
+  .print-p-4 { @media print { padding: 1rem; } }
+  .print-p-0 { @media print { padding: 0; } }
+  .print-m-0 { @media print { margin: 0; } }
+  .print-mb-4 { @media print { margin-bottom: 1rem; } }
+  .print-mb-8 { @media print { margin-bottom: 2rem; } }
+  .print-my-4 { @media print { margin-top: 1rem; margin-bottom: 1rem; } }
+  .print-shadow-none { @media print { box-shadow: none; } }
+  .print-border-none { @media print { border: none; } }
+  .print-text-base { @media print { font-size: 1rem; } }
+
+  .print-header-mb { @media print { margin-bottom: 2rem; } }
+  .print-section-mb { @media print { margin-bottom: 2rem; } }
+  .print-table-cell-p { @media print { padding: 0.5rem 1rem; } }
+  .print-footer-mt { @media print { margin-top: 1rem; } }
+
 }
 
 @page {
   size: A4;
   margin: 1.5cm;
+}
+
+@media print {
+  body {
+    background-color: #fff;
+  }
 }

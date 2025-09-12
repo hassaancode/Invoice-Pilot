@@ -11,7 +11,7 @@ export default function Home() {
         <InvoiceActions />
       </div>
 
-      <main className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-4 sm:p-8">
+      <main className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-4 sm:p-8 print-p-0 print-m-0">
         <div className="print-hidden">
           <InvoiceForm />
         </div>
