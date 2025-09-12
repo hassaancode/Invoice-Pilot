@@ -3,8 +3,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Invoice, LineItem } from '@/lib/types';
-import { enhanceLineItemDescriptions } from '@/ai/flows/enhance-line-item-descriptions';
-import { reformatInvoiceForPrint } from '@/ai/flows/reformat-invoice-for-print';
 
 interface InvoiceState {
   invoice: Invoice;
@@ -13,8 +11,6 @@ interface InvoiceState {
   addItem: () => void;
   updateItem: (id: string, field: keyof LineItem, value: any) => void;
   removeItem: (id: string) => void;
-  enhanceDescriptions: () => Promise<boolean>;
-  reformatInvoice: () => Promise<boolean>;
   getSubtotal: () => number;
   getTotalTax: () => number;
   getTotal: () => number;
@@ -71,35 +67,6 @@ export const useInvoiceStore = create<InvoiceState>()(
           items: state.invoice.items.filter(item => item.id !== id),
         },
       })),
-      enhanceDescriptions: async () => {
-        const { invoice } = get();
-        const descriptionsToEnhance = invoice.items.map(item => ({ description: item.description }));
-        
-        try {
-          const result = await enhanceLineItemDescriptions(descriptionsToEnhance);
-          const updatedItems = invoice.items.map((item, index) => ({
-            ...item,
-            description: result[index].enhancedDescription,
-          }));
-          set({ invoice: { ...invoice, items: updatedItems } });
-          return true;
-        } catch (error) {
-          console.error("Failed to enhance descriptions:", error);
-          return false;
-        }
-      },
-      reformatInvoice: async () => {
-        const { invoice } = get();
-        try {
-          const result = await reformatInvoiceForPrint({ invoiceData: JSON.stringify(invoice) });
-          const reformattedData = JSON.parse(result.reformattedInvoiceData) as Partial<Invoice>;
-          set({ invoice: { ...invoice, ...reformattedData } });
-          return true;
-        } catch (error) {
-          console.error("Failed to reformat invoice:", error);
-          return false;
-        }
-      },
       getSubtotal: () => {
         const { invoice } = get();
         return invoice.items.reduce((acc, item) => acc + item.quantity * item.price, 0);

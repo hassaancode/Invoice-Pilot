@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useTransition, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useInvoiceStore } from '@/store/invoice-store';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,18 +8,14 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Plus, Sparkles, Trash2, Loader2, Calendar as CalendarIcon } from 'lucide-react';
+import { Plus, Trash2, Calendar as CalendarIcon } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
-import { useToast } from '@/hooks/use-toast';
 
 export function InvoiceForm() {
-  const { invoice, updateField, addItem, updateItem, removeItem, enhanceDescriptions, initializeDates } = useInvoiceStore();
-  const [isPending, startTransition] = useTransition();
-  const [isEnhancing, setIsEnhancing] = useState(false);
-  const { toast } = useToast();
+  const { invoice, updateField, addItem, updateItem, removeItem, initializeDates } = useInvoiceStore();
 
   useEffect(() => {
     initializeDates();
@@ -30,26 +26,6 @@ export function InvoiceForm() {
       updateField(field, format(date, 'yyyy-MM-dd'));
     }
   };
-  
-  const handleEnhance = () => {
-    startTransition(async () => {
-      setIsEnhancing(true);
-      const success = await enhanceDescriptions();
-      if (success) {
-        toast({
-          title: 'Descriptions Enhanced',
-          description: 'Line item descriptions have been improved by AI.',
-        });
-      } else {
-        toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: 'Could not enhance descriptions.',
-        });
-      }
-      setIsEnhancing(false);
-    });
-  }
 
   return (
     <div className="space-y-6">
@@ -141,10 +117,6 @@ export function InvoiceForm() {
       <Card>
         <CardHeader className="flex-row items-center justify-between">
           <CardTitle>Line Items</CardTitle>
-          <Button variant="outline" size="sm" onClick={handleEnhance} disabled={isPending || isEnhancing}>
-             {isEnhancing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-            <span className="ml-2">Enhance</span>
-          </Button>
         </CardHeader>
         <CardContent>
           <Table>
