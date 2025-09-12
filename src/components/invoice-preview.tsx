@@ -14,9 +14,19 @@ export function InvoicePreview() {
   const total = getTotal();
   const discountAmount = subtotal * (invoice.discount / 100);
 
+  const parseDate = (dateString: string) => {
+    if (!dateString) return undefined;
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
+
   const formatDate = (dateString: string) => {
     try {
-      return format(new Date(dateString), 'PPP');
+      const date = parseDate(dateString);
+      if (date) {
+        return format(date, 'PPP');
+      }
+      return 'Invalid Date';
     } catch {
       return 'Invalid Date';
     }

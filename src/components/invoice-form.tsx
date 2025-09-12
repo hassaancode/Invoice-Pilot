@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { currencies } from '@/lib/currencies';
+import { add } from 'date-fns';
 
 export function InvoiceForm() {
   const { invoice, updateField, addItem, updateItem, removeItem, initializeDates } = useInvoiceStore();
@@ -25,9 +26,17 @@ export function InvoiceForm() {
 
   const handleDateChange = (field: 'invoiceDate' | 'dueDate', date?: Date) => {
     if (date) {
-      updateField(field, format(date, 'yyyy-MM-dd'));
+      // Adjust for timezone offset
+      const adjustedDate = add(date, { minutes: date.getTimezoneOffset() })
+      updateField(field, format(adjustedDate, 'yyyy-MM-dd'));
     }
   };
+
+  const parseDate = (dateString: string) => {
+    if (!dateString) return undefined;
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  }
 
   return (
     <div className="space-y-6">
@@ -91,11 +100,11 @@ export function InvoiceForm() {
               <PopoverTrigger asChild>
                 <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !invoice.invoiceDate && "text-muted-foreground")}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {invoice.invoiceDate ? format(new Date(invoice.invoiceDate), "PPP") : <span>Pick a date</span>}
+                  {invoice.invoiceDate ? format(parseDate(invoice.invoiceDate)!, "PPP") : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
-                <Calendar mode="single" selected={invoice.invoiceDate ? new Date(invoice.invoiceDate) : undefined} onSelect={(d) => handleDateChange('invoiceDate', d)} initialFocus />
+                <Calendar mode="single" selected={parseDate(invoice.invoiceDate)} onSelect={(d) => handleDateChange('invoiceDate', d)} initialFocus />
               </PopoverContent>
             </Popover>
           </div>
@@ -105,11 +114,11 @@ export function InvoiceForm() {
               <PopoverTrigger asChild>
                 <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !invoice.dueDate && "text-muted-foreground")}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {invoice.dueDate ? format(new Date(invoice.dueDate), "PPP") : <span>Pick a date</span>}
+                  {invoice.dueDate ? format(parseDate(invoice.dueDate)!, "PPP") : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
-                <Calendar mode="single" selected={invoice.dueDate ? new Date(invoice.dueDate) : undefined} onSelect={(d) => handleDateChange('dueDate', d)} initialFocus />
+                <Calendar mode="single" selected={parseDate(invoice.dueDate)} onSelect={(d) => handleDateChange('dueDate', d)} initialFocus />
               </PopoverContent>
             </Popover>
           </div>
