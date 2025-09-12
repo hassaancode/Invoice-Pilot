@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useTransition } from 'react';
+import React, { useState, useTransition, useEffect } from 'react';
 import { useInvoiceStore } from '@/store/invoice-store';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -16,10 +16,14 @@ import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 
 export function InvoiceForm() {
-  const { invoice, updateField, addItem, updateItem, removeItem, enhanceDescriptions } = useInvoiceStore();
+  const { invoice, updateField, addItem, updateItem, removeItem, enhanceDescriptions, initializeDates } = useInvoiceStore();
   const [isPending, startTransition] = useTransition();
   const [isEnhancing, setIsEnhancing] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    initializeDates();
+  }, [initializeDates]);
 
   const handleDateChange = (field: 'invoiceDate' | 'dueDate', date?: Date) => {
     if (date) {
@@ -113,7 +117,7 @@ export function InvoiceForm() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
-                <Calendar mode="single" selected={new Date(invoice.invoiceDate)} onSelect={(d) => handleDateChange('invoiceDate', d)} initialFocus />
+                <Calendar mode="single" selected={invoice.invoiceDate ? new Date(invoice.invoiceDate) : undefined} onSelect={(d) => handleDateChange('invoiceDate', d)} initialFocus />
               </PopoverContent>
             </Popover>
           </div>
@@ -127,7 +131,7 @@ export function InvoiceForm() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
-                <Calendar mode="single" selected={new Date(invoice.dueDate)} onSelect={(d) => handleDateChange('dueDate', d)} initialFocus />
+                <Calendar mode="single" selected={invoice.dueDate ? new Date(invoice.dueDate) : undefined} onSelect={(d) => handleDateChange('dueDate', d)} initialFocus />
               </PopoverContent>
             </Popover>
           </div>

@@ -18,6 +18,7 @@ interface InvoiceState {
   getSubtotal: () => number;
   getTotalTax: () => number;
   getTotal: () => number;
+  initializeDates: () => void;
 }
 
 const initialInvoice: Invoice = {
@@ -29,8 +30,8 @@ const initialInvoice: Invoice = {
   recipientAddress: '456 Oak Ave, Otherville, USA 54321',
   recipientEmail: 'client@email.com',
   invoiceNumber: 'INV-001',
-  invoiceDate: new Date().toISOString().split('T')[0],
-  dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+  invoiceDate: '', // Set to empty string initially
+  dueDate: '', // Set to empty string initially
   currency: 'USD',
   items: [
     { id: '1', description: 'Web design services', quantity: 10, price: 100, tax: 0 },
@@ -116,6 +117,18 @@ export const useInvoiceStore = create<InvoiceState>()(
         const totalTax = get().getTotalTax();
         const discountAmount = subtotal * (invoice.discount / 100);
         return subtotal + totalTax - discountAmount;
+      },
+      initializeDates: () => {
+        const { invoice } = get();
+        if (!invoice.invoiceDate && !invoice.dueDate) {
+          set({
+            invoice: {
+              ...invoice,
+              invoiceDate: new Date().toISOString().split('T')[0],
+              dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            }
+          });
+        }
       },
     }),
     {
