@@ -14,6 +14,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { currencies } from '@/lib/currencies';
 
 export function InvoiceForm() {
   const { invoice, updateField, addItem, updateItem, removeItem, initializeDates } = useInvoiceStore();
@@ -162,15 +163,11 @@ export function InvoiceForm() {
                     <SelectValue placeholder="Select currency" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="USD">USD - US Dollar</SelectItem>
-                    <SelectItem value="EUR">EUR - Euro</SelectItem>
-                    <SelectItem value="GBP">GBP - British Pound</SelectItem>
-                    <SelectItem value="JPY">JPY - Japanese Yen</SelectItem>
-                    <SelectItem value="AUD">AUD - Australian Dollar</SelectItem>
-                    <SelectItem value="CAD">CAD - Canadian Dollar</SelectItem>
-                    <SelectItem value="CHF">CHF - Swiss Franc</SelectItem>
-                    <SelectItem value="CNY">CNY - Chinese Yuan</SelectItem>
-                    <SelectItem value="INR">INR - Indian Rupee</SelectItem>
+                    {currencies.map(currency => (
+                      <SelectItem key={currency.code} value={currency.code}>
+                        {currency.code} - {currency.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
             </div>
