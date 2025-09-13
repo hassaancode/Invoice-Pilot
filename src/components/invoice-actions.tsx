@@ -10,7 +10,7 @@ export function InvoiceActions() {
   };
 
   return (
-    <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b">
+    <header className="fixed top-0 left-0 right-0 z-10 bg-background/80 backdrop-blur-sm border-b">
       <div className="container mx-auto flex items-center justify-between p-4">
         <div className="flex items-center gap-3">
           <FileText className="h-8 w-8 text-primary" />
