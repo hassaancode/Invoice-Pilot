@@ -100,7 +100,7 @@ export function InvoiceForm() {
               <PopoverTrigger asChild>
                 <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !invoice.invoiceDate && "text-muted-foreground")}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {invoice.invoiceDate ? format(parseDate(invoice.invoiceDate)!, "PPP") : <span>Pick a date</span>}
+                  {invoice.invoiceDate ? format(parseDate(invoice.invoiceDate)!, "MMM d, yyyy") : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
@@ -114,7 +114,7 @@ export function InvoiceForm() {
               <PopoverTrigger asChild>
                 <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !invoice.dueDate && "text-muted-foreground")}>
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {invoice.dueDate ? format(parseDate(invoice.dueDate)!, "PPP") : <span>Pick a date</span>}
+                  {invoice.dueDate ? format(parseDate(invoice.dueDate)!, "MMM d, yyyy") : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">

@@ -24,7 +24,7 @@ export function InvoicePreview() {
     try {
       const date = parseDate(dateString);
       if (date) {
-        return format(date, 'PPP');
+        return format(date, 'MMM d, yyyy');
       }
       return 'Invalid Date';
     } catch {
