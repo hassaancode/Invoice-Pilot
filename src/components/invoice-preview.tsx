@@ -6,9 +6,20 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFoo
 import { Separator } from '@/components/ui/separator';
 import { formatCurrency } from '@/lib/utils';
 import { format } from 'date-fns';
+import { useState, useEffect } from 'react';
 
 export function InvoicePreview() {
   const { invoice, getSubtotal, getTotalTax, getTotal } = useInvoiceStore();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null; // or a loading skeleton
+  }
+
   const subtotal = getSubtotal();
   const totalTax = getTotalTax();
   const total = getTotal();
