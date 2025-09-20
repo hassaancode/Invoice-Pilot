@@ -3,7 +3,7 @@ Real-Time Invoice Generator build in nextjs
 
 ## Features
 1. Real-Time Invoice Form Filling.
-2. Print/Download Invoice in any (all size compatible)
+2. Print / Download Invoice in any size (all size compatible)
 
 ## Prerequisites
 
