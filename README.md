@@ -1,17 +1,9 @@
 # Invoice Pilot - Generic Invoice Generator
-Ai movie recommendation system build in nextjs using Gemini Api and TMDB api
+Real-Time Invoice Generator build in nextjs
 
 ## Features
-1. Recommendations based on Scenario.
-2. Recommendations based on Movies.
-3. Genre Filters.
-4. Type Filter (Moive / TV).
-5. Sorting Based on (Relase date / Popular / IMDB rating).
-6. Trailer for every movie dialog card.
-
-## Api's Used
-Gemini api  
-TMDB api
+1. Real-Time Invoice Form Filling.
+2. Print/Download Invoice in any (all size compatible)
 
 ## Prerequisites
 
@@ -66,9 +58,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
